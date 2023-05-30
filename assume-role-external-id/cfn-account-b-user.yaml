@@ -1,0 +1,23 @@
+Parameters:
+  AccountA:
+    Type: String
+
+Resources:
+  User:
+    Type: AWS::IAM::User
+    Properties:
+      UserName: auditor
+
+  AssumeRole:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action:
+              - 'sts:AssumeRole'
+            Resource: !Sub 'arn:aws:iam::${AccountA}:role/Auditor'
+      PolicyName: AssumeRole
+      Users:
+        - !Ref User

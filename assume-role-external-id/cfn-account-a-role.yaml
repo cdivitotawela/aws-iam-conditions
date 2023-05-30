@@ -1,0 +1,43 @@
+# Template for the role creation
+Parameters:
+  AccountB:
+    Type: String
+
+Resources:
+  Auditor:
+    Type: AWS::IAM::Role
+    Properties:
+      Description: "Auditor role"
+      RoleName: Auditor
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS: !Sub "arn:aws:iam::${AccountB}:root"
+            Action:
+              - 'sts:AssumeRole'
+            Condition:
+              StringEquals:
+                "sts:ExternalId": "2231"
+
+  S3ListBuckets:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action:
+              - 's3:ListBucket'
+              - 's3:ListAllMyBuckets'
+            Resource: '*'
+      PolicyName: S3ListBuckets
+      Roles:
+        - !Ref Auditor
+
+Outputs:
+  RoleArn:
+    Value: !GetAtt Auditor.Arn
+    Export:
+      Name: RoleArn
