@@ -1,7 +1,7 @@
 
 ## Assume Role with External Id
 Account `A` has role `auditor` which can be assumed by the account `B`
-Role `auditor` allows to list the buckets. Setup the IAM user `auditor` in account `B` with 
+user `auditor` allows to list the buckets. Setup the IAM user `auditor` in account `B` with 
 AWS CLI configuration to assume the `auditor` role and list bucket. Role `auditor` can be assumed
 with the external id `2231`.
 
